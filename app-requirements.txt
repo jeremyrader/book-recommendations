@@ -1,0 +1,9 @@
+v1
+
+Submit a book, movie, board game (in the form of a link, photo)
+Post a review
+Search for content to review
+
+v2
+Comment on a review
+Tag items
