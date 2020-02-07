@@ -1,4 +1,5 @@
 from flask import Flask, request
+import db
 
 app=Flask(__name__)
 
@@ -14,12 +15,13 @@ def product():
     if request.method == "GET":
 
         productId = request.args.get('id', '')
+        product = db.getProductById(productId)
 
         return {
-            "id": productId,
-            "url": "test.com",
-            "imgSrc": "test.jpg",
-            "title": "Test Title"
+            "id": product[0],
+            "url": product[1],
+            "imgSrc": product[2],
+            "title": product[3]
         }
 
     if request.method == "POST":
@@ -27,6 +29,8 @@ def product():
         url = request.args.get('url', '')
         imgSrc = request.args.get('imgSrc', '')
         title = request.args.get('title', '')
+
+        db.insertProduct(url, imgSrc, title)
 
         return {
             "url": url,
@@ -37,26 +41,7 @@ def product():
 @app.route("/products")
 def products():
     return {
-        "products": [
-            {
-            "id": 1,
-            "url": "test.com",
-            "imgSrc": "test.jpg",
-            "title": "Test Title 1"
-            },
-            {
-            "id": 2,
-            "url": "test.com",
-            "imgSrc": "test.jpg",
-            "title": "Test Title 2"
-            },
-            {
-            "id": 3,
-            "url": "test.com",
-            "imgSrc": "test.jpg",
-            "title": "Test Title 3"
-            }
-        ]
+        "products": db.getAllProducts()
     }
 
 @app.route("/review", methods=["POST"])
@@ -65,6 +50,8 @@ def review():
 
         productId = request.args.get('id', '')
         review = request.args.get('review', '')
+
+        db.insertReview(productId, review)
 
         return {
             "id": productId,
@@ -77,20 +64,7 @@ def reviews():
     productId = request.args.get('id', '')
 
     return {
-        "reviews": [
-            {
-            "id": 1,
-            "review": "This could be good",
-            },
-            {
-            "id": 2,
-            "review": "This could be good",
-            },
-            {
-            "id": 3,
-            "review": "This could be good",
-            }
-        ]
+        "reviews": db.getAllReviewsByProductId(productId)
     }
 
 if __name__=="__main__":
