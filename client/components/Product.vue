@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col items-start m-5 bg-gray-100">
       <h1>{{ product.title }}</h1>
 
       <div>
