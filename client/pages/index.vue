@@ -7,15 +7,21 @@
       <h2 class="subtitle">
         Our favorites
       </h2>
-      {{ products }}
+
+      <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Product from '../components/Product.vue'
 
 export default {
+
+  components: {
+    Product
+  },
 
   data: function() {
     return {
@@ -33,7 +39,7 @@ export default {
       let res = await axios
         .get('http://localhost:5000/products')
 
-      return res.data
+      return res.data.products
     }
   }
 

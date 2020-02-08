@@ -44,8 +44,17 @@ def product():
 
 @app.route("/products")
 def products():
+
+    def keymap(product):
+        return {
+            "id": product[0],
+            "url": product[1],
+            "imgSrc": product[2],
+            "title": product[3]
+        }
+
     return {
-        "products": db.getAllProducts()
+        "products": list(map(keymap, db.getAllProducts()))
     }
 
 @app.route("/review", methods=["POST"])
