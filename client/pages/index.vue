@@ -7,21 +7,17 @@
       <h2 class="subtitle">
         Our favorites
       </h2>
-      <div>
-        <button type="button" :click="addNewProduct">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="addNewProduct">
           Add new
-        </button>
-      </div>
-      <div v-show="showProductFields == true">
+      </button>
+      <div v-if="showProductFields == true">
         <form>
-          <input v-model="url" type="text" placeholder="Url"/>>
-          <input v-model="imgSrc" type="text" placeholder="ImgSrc"/>>
-          <input v-model="title" type="text" placeholder="Title"/>>
-
-          <button type="button" :click="submitNewProduct">
+          <input v-model="url" type="text" class="bg-gray-100" placeholder="Url"/>
+          <input v-model="imgSrc" type="text" placeholder="ImgSrc"/>
+          <input v-model="title" type="text" placeholder="Title"/>
+          <button type="button" @click="submitNewProduct">
             Complete
           </button>
-
         </form>
 
       </div>
@@ -73,8 +69,12 @@ export default {
         .post(`http://localhost:5000/product?url=${this.url}&imgSrc=${this.imgSrc}&title=${this.title}`)
 
       this.products = await this.getProducts()
-    }
 
+      this.showProductFields = false
+      this.url = '',
+      this.imgSrc = '',
+      this.title = ''
+    }
 
   }
 
