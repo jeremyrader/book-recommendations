@@ -15,7 +15,7 @@
           <input v-model="url" type="text" class="bg-gray-100" placeholder="Url"/>
           <input v-model="imgSrc" type="text" placeholder="ImgSrc"/>
           <input v-model="title" type="text" placeholder="Title"/>
-          <button type="button" @click="submitNewProduct">
+          <button type="button" @click="submitNewProduct" :disabled="!imgSrc || !title || !url">
             Complete
           </button>
         </form>
