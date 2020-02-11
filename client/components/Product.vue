@@ -53,7 +53,6 @@ export default {
     },
 
     async getReviews() {
-        console.log('prod', this.product)
       let res = await axios
         .get(`http://localhost:5000/reviews?id=${this.product.id}`)
 

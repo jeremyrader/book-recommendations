@@ -4,6 +4,9 @@
       <h1 class="title">
         Recommendations
       </h1>
+
+      <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
+
       <h2 class="subtitle">
         Our favorites
       </h2>
@@ -22,7 +25,7 @@
 
       </div>
 
-      <Product v-for="(product, index) in products" :product="product" :key="index" />
+      <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
     </div>
   </div>
 </template>
@@ -40,15 +43,17 @@ export default {
   data: function() {
     return {
       products: [],
+      filteredProducts: [],
       showProductFields: false,
       url: '',
       imgSrc: '',
-      title: ''
+      title: '',
+      keyword:'',
     }
   },
 
   mounted: async function() {
-    this.products = await this.getProducts()
+    this.filteredProducts = this.products = await this.getProducts()
   },
 
   methods: {
@@ -74,6 +79,10 @@ export default {
       this.url = '',
       this.imgSrc = '',
       this.title = ''
+    },
+
+    filterProducts() {
+      this.filteredProducts = this.products.filter(product => product.title.toLowerCase().includes(this.keyword.toLowerCase()))
     }
 
   }
