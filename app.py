@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 import db
+import requests
 
 app=Flask(__name__)
 
@@ -30,16 +31,21 @@ def product():
 
     if request.method == "POST":
 
-        url = request.args.get('url', '')
-        imgSrc = request.args.get('imgSrc', '')
-        title = request.args.get('title', '')
+        URL = "http://api.linkpreview.net"
+        search = request.args.get('url', '')
 
-        db.insertProduct(url, imgSrc, title)
+        PARAMS = {'q': search, 'key': '5e420e68bcc55aeb243b18dbf50afe1a0ca7968c319d5'} 
 
+        r = requests.get(url = URL, params = PARAMS) 
+
+        data = r.json()
+
+        db.insertProduct(data["url"], data["image"], data["description"])
+        print(data)
         return {
-            "url": url,
-            "imgSrc": imgSrc,
-            "title": title
+            "url": data["url"],
+            "imgSrc": data["image"],
+            "title": data["description"]
         }
 
 @app.route("/products")
