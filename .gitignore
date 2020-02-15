@@ -1,4 +1,2 @@
 virtual
 __pycache__/
-sqlite_db
-recommendations.db
