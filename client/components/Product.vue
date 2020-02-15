@@ -56,7 +56,7 @@ export default {
       let res = await axios
         .get(`http://localhost:5000/reviews?id=${this.product.id}`)
 
-      return res.data.reviews
+      return res.data
     },
     async submitReview() {
         let res = await axios

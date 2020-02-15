@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import db
 import requests
@@ -10,10 +10,10 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route("/")
 def index():
-    return {
+    return jsonify({
         "author": "Jeremy Rader",
         "project": "Zennify Recommendations"
-    }
+    })
 
 @app.route("/product", methods=["POST", "GET"])
 def product():
@@ -22,12 +22,12 @@ def product():
         productId = request.args.get('id', '')
         product = db.getProductById(productId)
 
-        return {
+        return jsonify({
             "id": product[0],
             "url": product[1],
             "imgSrc": product[2],
             "title": product[3]
-        }
+        })
 
     if request.method == "POST":
 
@@ -59,9 +59,7 @@ def products():
             "title": product[3]
         }
 
-    return {
-        "products": list(map(keymap, db.getAllProducts()))
-    }
+    return jsonify(list(map(keymap, db.getAllProducts())))
 
 @app.route("/review", methods=["POST"])
 def review():
@@ -72,19 +70,17 @@ def review():
 
         db.insertReview(productId, review)
 
-        return {
+        return jsonify({
             "id": productId,
             "review": review,
-        }
+        })
 
 @app.route("/reviews")
 def reviews():
 
     productId = request.args.get('id', '')
 
-    return {
-        "reviews": db.getAllReviewsByProductId(productId)
-    }
+    return jsonify(db.getAllReviewsByProductId(productId))
 
 if __name__=="__main__":
     app.run(debug=True)

@@ -62,7 +62,7 @@ export default {
       let res = await axios
         .get('http://localhost:5000/products')
 
-      return res.data.products
+      return res.data
     },
 
     addNewProduct() {
