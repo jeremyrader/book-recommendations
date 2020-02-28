@@ -10,6 +10,8 @@
       <div>
         <a :href="product.url">Link</a>
       </div>
+
+      <p>Posted by {{product.userId}}</p>
       
   </div>
     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="addReview">Add a Review</button>
@@ -22,6 +24,7 @@
     <div v-if="reviews.length > 0">
         <p v-for="(review, index) in reviews" :key="index">
             {{ review[2] }}
+            Posted by {{review[3]}}
         </p>
     </div>
     
@@ -60,7 +63,7 @@ export default {
     },
     async submitReview() {
         let res = await axios
-            .post(`http://localhost:5000/review?id=${this.product.id}&review=${this.review}`)
+            .post(`http://localhost:5000/review?id=${this.product.id}&review=${this.review}&userName=${this.$store.state.user.name}`)
 
         this.showReviewBox = false
         this.reviews = await this.getReviews()

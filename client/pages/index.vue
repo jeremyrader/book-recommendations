@@ -81,7 +81,7 @@ export default {
 
     async submitNewProduct() {
       let res = await axios
-        .post(`http://localhost:5000/product?url=${this.url}&imgSrc=${this.imgSrc}&title=${this.title}`)
+        .post(`http://localhost:5000/product?url=${this.url}&imgSrc=${this.imgSrc}&title=${this.title}&userName=${this.$store.state.user.name}`)
 
       this.products = await this.getProducts()
 

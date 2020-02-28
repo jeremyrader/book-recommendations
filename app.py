@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import db
-#import requests
+import requests
 from google.oauth2 import id_token
-from google.auth.transport import requests
+from google.auth.transport import requests as gRequest
 
 app=Flask(__name__)
 
@@ -35,6 +35,7 @@ def product():
 
         URL = "http://api.linkpreview.net"
         search = request.args.get('url', '')
+        userId = request.args.get('userName', '')
 
         PARAMS = {'q': search, 'key': '5e420e68bcc55aeb243b18dbf50afe1a0ca7968c319d5'} 
 
@@ -42,13 +43,13 @@ def product():
 
         data = r.json()
 
-        db.insertProduct(data["url"], data["image"], data["description"])
-        print(data)
-        return {
+        db.insertProduct(data["url"], data["image"], data["description"], userId)
+
+        return jsonify({
             "url": data["url"],
             "imgSrc": data["image"],
             "title": data["description"]
-        }
+        })
 
 @app.route("/products")
 def products():
@@ -58,7 +59,8 @@ def products():
             "id": product[0],
             "url": product[1],
             "imgSrc": product[2],
-            "title": product[3]
+            "title": product[3],
+            "userId": product[4]
         }
 
     return jsonify(list(map(keymap, db.getAllProducts())))
@@ -69,8 +71,9 @@ def review():
 
         productId = request.args.get('id', '')
         review = request.args.get('review', '')
+        userId = request.args.get('userName', '')
 
-        db.insertReview(productId, review)
+        db.insertReview(productId, review, userId)
 
         return jsonify({
             "id": productId,
@@ -92,7 +95,7 @@ def auth():
 
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+        idinfo = id_token.verify_oauth2_token(token, gRequest.Request(), CLIENT_ID)
 
         # Or, if multiple clients access the backend server:
         # idinfo = id_token.verify_oauth2_token(token, requests.Request())

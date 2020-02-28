@@ -4,16 +4,16 @@ def connect():
     conn=sqlite3.connect("recommendations.db")
     cur=conn.cursor()
 
-    cur.execute("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY, url text, imgSrc text, title text)")
-    cur.execute("CREATE TABLE IF NOT EXISTS review (id INTEGER PRIMARY KEY, productId INTEGER, review text, FOREIGN KEY(productId) REFERENCES product(id))")
+    cur.execute("CREATE TABLE IF NOT EXISTS product (id INTEGER PRIMARY KEY, url text, imgSrc text, title text, addedBy text)")
+    cur.execute("CREATE TABLE IF NOT EXISTS review (id INTEGER PRIMARY KEY, productId INTEGER, review text, addedBy text, FOREIGN KEY(productId) REFERENCES product(id))")
     
     conn.commit()
     conn.close()
 
-def insertProduct(url, imgSrc, title):
+def insertProduct(url, imgSrc, title, userId):
     conn=sqlite3.connect("recommendations.db")
     cur=conn.cursor()
-    cur.execute("INSERT INTO product VALUES (NULL,?,?,?)", (url, imgSrc, title))
+    cur.execute("INSERT INTO product VALUES (NULL,?,?,?,?)", (url, imgSrc, title, userId))
     conn.commit()
     conn.close()
 
@@ -33,10 +33,10 @@ def getProductById(productId):
     conn.close()
     return rows
 
-def insertReview(productId, review):
+def insertReview(productId, review, userId):
     conn=sqlite3.connect("recommendations.db")
     cur=conn.cursor()
-    cur.execute("INSERT INTO review VALUES (NULL,?,?)", (productId, review))
+    cur.execute("INSERT INTO review VALUES (NULL,?,?,?)", (productId, review, userId))
     conn.commit()
     conn.close()
 
