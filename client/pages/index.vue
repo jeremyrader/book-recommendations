@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <div>
+      <p>Hello {{user.name}}!</p>
+      <a href="#" @click="signOut">Sign out</a>
       <h1 class="title">
         Recommendations
       </h1>
@@ -48,17 +50,25 @@ export default {
       url: '',
       imgSrc: '',
       title: '',
-      keyword:'',
+      keyword:''
     }
   },
 
   mounted: async function() {
-    this.filteredProducts = this.products = await this.getProducts()
+    if (!this.$store.state.authorized) {
+      this.$router.push({ path: '/login'})
+    }
+    else {
+      this.filteredProducts = this.products = await this.getProducts()
+    }
   },
-
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
   methods: {
     async getProducts() {
-
       let res = await axios
         .get('http://localhost:5000/products')
 
@@ -83,6 +93,14 @@ export default {
 
     filterProducts() {
       this.filteredProducts = this.products.filter(product => product.title.toLowerCase().includes(this.keyword.toLowerCase()))
+    },
+
+    signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(() => {
+        this.$store.commit('unauthorizeUser')
+        this.$router.push({ name: 'login'})
+      });
     }
 
   }
