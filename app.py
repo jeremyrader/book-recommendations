@@ -86,9 +86,9 @@ def reviews():
 
 @app.route('/auth', methods=['POST'])
 def auth():
-    token = request.args.get('tokenId', '')
+    token = request.args.get('token', '')
 
-    CLIENT_ID = '833516466041-7dcqaf16fqn9qln34is6g0at9emdj3sb'
+    CLIENT_ID = '833516466041-7dcqaf16fqn9qln34is6g0at9emdj3sb.apps.googleusercontent.com'
 
     try:
         # Specify the CLIENT_ID of the app that accesses the backend:
@@ -102,17 +102,20 @@ def auth():
         if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
             raise ValueError('Wrong issuer.')
 
+        GSUITE_DOMAIN_NAME = 'zennify.com'
+
         # If auth request is from a G Suite domain:
-        # if idinfo['hd'] != GSUITE_DOMAIN_NAME:
-        #     raise ValueError('Wrong hosted domain.')
+        if 'hd' not in idinfo or idinfo['hd'] != GSUITE_DOMAIN_NAME:
+            raise ValueError('Wrong hosted domain.')
 
         # ID token is valid. Get the user's Google Account ID from the decoded token.
         userid = idinfo['sub']
-    except ValueError:
-        # Invalid token
-        pass
 
-    return jsonify({})
+        return jsonify({'authorized': True})
+
+    except ValueError:
+        return jsonify({'authorized': False})
+
 
 if __name__=="__main__":
     app.run(debug=True)
