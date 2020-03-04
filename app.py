@@ -7,6 +7,8 @@ from google.auth.transport import requests as gRequest
 
 app=Flask(__name__)
 
+db.connect()
+
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
@@ -37,13 +39,13 @@ def product():
         search = request.args.get('url', '')
         userId = request.args.get('userName', '')
 
-        PARAMS = {'q': search, 'key': '5e420e68bcc55aeb243b18dbf50afe1a0ca7968c319d5'} 
+        PARAMS = {'q': search, 'key': '2c96a400dbf333d28719add551fe1485'} 
 
         r = requests.get(url = URL, params = PARAMS) 
 
         data = r.json()
-
-        db.insertProduct(data["url"], data["image"], data["description"], userId)
+        print(data)
+        db.insertProduct(data["url"], data["image"], data["title"], data["description"], userId)
 
         return jsonify({
             "url": data["url"],
@@ -60,7 +62,8 @@ def products():
             "url": product[1],
             "imgSrc": product[2],
             "title": product[3],
-            "userId": product[4]
+            "description": product[4],
+            "userId": product[5]
         }
 
     return jsonify(list(map(keymap, db.getAllProducts())))

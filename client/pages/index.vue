@@ -1,35 +1,33 @@
 <template>
-  <div class="container">
-    <div>
-      <p>Hello {{user.name}}!</p>
-      <a href="#" @click="signOut">Sign out</a>
-      <h1 class="title">
-        Recommendations
-      </h1>
+    <div class="container">
+        <div>
+            <div>
+                <p>Hello {{user.name}}!</p>
+                <a href="#" @click="signOut">Sign out</a>
+            </div>
+        
+            <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
+            <h2 class="subtitle">Our favorites</h2>
 
-      <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
+            <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
 
-      <h2 class="subtitle">
-        Our favorites
-      </h2>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="addNewProduct">
-          Add new
-      </button>
-      <div v-if="showProductFields == true">
-        <form>
-          <input v-model="url" type="text" class="bg-gray-100" placeholder="Url"/>
-          <input v-model="imgSrc" type="text" placeholder="ImgSrc"/>
-          <input v-model="title" type="text" placeholder="Title"/>
-          <button type="button" @click="submitNewProduct">
-            Complete
-          </button>
-        </form>
 
-      </div>
+            <form class="w-full max-w-sm mb-10">
+                <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+                    <input
+                        v-model="url"
+                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="url" aria-label="Full name">
+                    <button
+                        @click="submitNewProduct"
+                        class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                        Submit
+                    </button>
+                </div>
+            </form>
 
-      <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
+            <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -48,8 +46,6 @@ export default {
       filteredProducts: [],
       showProductFields: false,
       url: '',
-      imgSrc: '',
-      title: '',
       keyword:''
     }
   },
@@ -75,20 +71,13 @@ export default {
       return res.data
     },
 
-    addNewProduct() {
-      this.showProductFields = true
-    },
-
     async submitNewProduct() {
       let res = await axios
-        .post(`http://localhost:5000/product?url=${this.url}&imgSrc=${this.imgSrc}&title=${this.title}&userName=${this.$store.state.user.name}`)
+        .post(`http://localhost:5000/product?url=${this.url}&userName=${this.$store.state.user.name}`)
 
       this.products = await this.getProducts()
 
-      this.showProductFields = false
-      this.url = '',
-      this.imgSrc = '',
-      this.title = ''
+      this.url = ''
     },
 
     filterProducts() {
