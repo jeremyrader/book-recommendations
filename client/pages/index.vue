@@ -1,19 +1,21 @@
 <template>
     <div class="container">
         <div>
-            <div>
-                <p>Hello {{user.name}}!</p>
-                <a href="#" @click="signOut">Sign out</a>
+            <div class="flex justify-end">
+                <div class="flex flex-col">
+                    <div class="flex items-center">
+                        {{user.name}}
+                        <img class="w-10 h-10 rounded-full ml-4" src="https://lh3.googleusercontent.com/a-/AOh14Gj-L_2-VPPVXS6WKKXyG57FoLqpvBOxQwPr_nrG=s96-c" alt="Avatar of Jonathan Reinink" />
+                    </div>
+                    <a href="#" @click="signOut">Sign out</a>
+                </div>
             </div>
         
             <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
             <h2 class="subtitle">Our favorites</h2>
 
-            <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
-
-
-            <form class="w-full max-w-sm mb-10">
-                <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+            <form class="flex w-full mb-10">
+                <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mr-20">
                     <input
                         v-model="url"
                         class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="url" aria-label="Full name">
@@ -23,6 +25,7 @@
                         Submit
                     </button>
                 </div>
+                <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
             </form>
 
             <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
