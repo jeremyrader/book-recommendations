@@ -1,7 +1,20 @@
 <template>
     <div class="container">
         <div>
-            <div class="flex justify-end p-4">
+            <div class="flex justify-end items-center p-4">
+                <form class="flex w-full">
+                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mr-20">
+                        <input
+                            v-model="url"
+                            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="url" aria-label="Full name">
+                        <button
+                            @click="submitNewProduct"
+                            class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                            Submit
+                        </button>
+                    </div>
+                    <input class="rounded pl-5" v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
+                </form>
                 <div class="flex flex-col border border-gray-500 rounded-lg p-4 cursor-pointer" @click="toggleProfileOptions">
                     <div class="flex items-center font-bold">
                         <img class="w-10 h-10 rounded-full mr-4" :src="user.image" alt="Google User Avatar" />
@@ -13,20 +26,6 @@
         
             <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
             <h2 class="subtitle">Our favorites</h2>
-
-            <form class="flex w-full mb-10">
-                <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mr-20">
-                    <input
-                        v-model="url"
-                        class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="url" aria-label="Full name">
-                    <button
-                        @click="submitNewProduct"
-                        class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                        Submit
-                    </button>
-                </div>
-                <input v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
-            </form>
 
             <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
         </div>
