@@ -1,19 +1,7 @@
 <template>
     <div class="max-w-sm w-full lg:max-w-full lg:flex mb-10">
         <div class="w-full border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-            <div v-if="showReviewBox">
-                <p v-if="reviews.length === 0" class="mb-5">Be the first to review this recommendation!</p>
-                <p v-for="(review, index) in reviews" :key="index">
-                    <Review :review="review" />
-                </p>
-                <div class="flex">
-                    <textarea v-model="review" placeholder="What do you think?" class="w-full mr-5 pt-5 pl-5 border border-gray-400 resize-none outline-none"></textarea>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="submitReview">Add a Review</button>
-                    <button class="font-bold py-2 px-4 rounded outline-none" @click="closeReviewBox">Cancel</button>
-                </div>
-                
-            </div>
-            <div v-else>
+             <div>
                 <div class="mb-8">
                     <p v-if="false" class="text-sm text-gray-600 flex items-center">
                         <img src="./reading-list.svg" style="height:30px;" />
@@ -34,6 +22,17 @@
                         <span v-else class="mr-2">Leave a review</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </div>
+                </div>
+            </div>
+            <div v-if="showReviewBox" class="mt-10">
+                <p v-if="reviews.length === 0" class="mb-5">Be the first to review this recommendation!</p>
+                <p v-for="(review, index) in reviews" :key="index">
+                    <Review :review="review" />
+                </p>
+                <div class="flex">
+                    <textarea v-model="review" placeholder="What do you think?" class="w-full mr-5 pt-5 pl-5 border border-gray-400 resize-none outline-none"></textarea>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="submitReview">Add a Review</button>
+                    <button class="font-bold py-2 px-4 rounded outline-none" @click="closeReviewBox">Cancel</button>
                 </div>
             </div>
         </div>

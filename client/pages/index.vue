@@ -8,13 +8,13 @@
                         <input class="rounded pl-5 outline-none search" v-model="keyword" type="text" placeholder="Search" @input="filterProducts" @focus="handleSearchFocus" @blur="handleSearchBlur" />
                     </div>
                     
-                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2 ml-20">
+                    <div class="flex items-center border-b border-b-2 border-black py-2 ml-20">
                         <input
                             v-model="url"
                             class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight outline-none" type="text" placeholder="url" aria-label="Full name">
                         <button
                             @click="submitNewProduct"
-                            class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+                            class="flex-shrink-0 bg-black hover:bg-black-700 border-black hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
                             Submit
                         </button>
                     </div>
