@@ -1,19 +1,23 @@
 <template>
-    <div class="container">
+    <div class="flex items-center justify-center text-center mx-20">
         <div>
             <div class="flex justify-end items-center p-4">
-                <form class="flex w-full">
-                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mr-20">
+                <form class="flex w-full" spellcheck="false">
+                    <div class="flex items-center bg-white rounded-full pl-5">
+                        <svg v-if="showSearchIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search text-gray-500"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input class="rounded pl-5 outline-none search" v-model="keyword" type="text" placeholder="Search" @input="filterProducts" @focus="handleSearchFocus" @blur="handleSearchBlur" />
+                    </div>
+                    
+                    <div class="flex items-center border-b border-b-2 border-teal-500 py-2 ml-20">
                         <input
                             v-model="url"
-                            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="url" aria-label="Full name">
+                            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight outline-none" type="text" placeholder="url" aria-label="Full name">
                         <button
                             @click="submitNewProduct"
                             class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
                             Submit
                         </button>
                     </div>
-                    <input class="rounded pl-5" v-model="keyword" type="text" placeholder="Search" @input="filterProducts" />
                 </form>
                 <div class="flex flex-col border border-gray-500 rounded-lg p-4 cursor-pointer" @click="toggleProfileOptions">
                     <div class="flex items-center font-bold">
@@ -24,8 +28,10 @@
                 </div>
             </div>
         
-            <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
-            <h2 class="subtitle">Our favorites</h2>
+            <div class="mt-20">
+                <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
+                <h2 class="subtitle">Our favorites</h2>
+            </div>
 
             <Product v-for="(product, index) in filteredProducts" :product="product" :key="index" />
         </div>
@@ -49,7 +55,8 @@ export default {
         filteredProducts: [],
         showProductFields: false,
         url: '',
-        keyword:''
+        keyword:'',
+        showSearchIcon: true
     }
   },
 
@@ -97,6 +104,14 @@ export default {
 
     toggleProfileOptions() {
         this.showProfileOptions = !this.showProfileOptions
+    },
+
+    handleSearchFocus() {
+        this.showSearchIcon = false
+    },
+
+    handleSearchBlur() {
+        this.showSearchIcon = true
     }
 
   }
