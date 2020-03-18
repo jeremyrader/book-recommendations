@@ -4,7 +4,7 @@
             <div class="flex justify-end p-4">
                 <div class="flex flex-col border border-gray-500 rounded-lg p-4 cursor-pointer" @click="toggleProfileOptions">
                     <div class="flex items-center font-bold">
-                        <img class="w-10 h-10 rounded-full mr-4" src="https://lh3.googleusercontent.com/a-/AOh14Gj-L_2-VPPVXS6WKKXyG57FoLqpvBOxQwPr_nrG=s96-c" alt="Avatar of Jonathan Reinink" />
+                        <img class="w-10 h-10 rounded-full mr-4" :src="user.image" alt="Google User Avatar" />
                         {{user.name}}
                     </div>
                     <a class="flex justify-end font-medium" v-if="showProfileOptions" href="#" @click="signOut">Sign out</a>
