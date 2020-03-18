@@ -1,13 +1,13 @@
 <template>
     <div class="container">
         <div>
-            <div class="flex justify-end">
-                <div class="flex flex-col">
-                    <div class="flex items-center">
+            <div class="flex justify-end p-4">
+                <div class="flex flex-col border border-gray-500 rounded-lg p-4 cursor-pointer" @click="toggleProfileOptions">
+                    <div class="flex items-center font-bold">
+                        <img class="w-10 h-10 rounded-full mr-4" src="https://lh3.googleusercontent.com/a-/AOh14Gj-L_2-VPPVXS6WKKXyG57FoLqpvBOxQwPr_nrG=s96-c" alt="Avatar of Jonathan Reinink" />
                         {{user.name}}
-                        <img class="w-10 h-10 rounded-full ml-4" src="https://lh3.googleusercontent.com/a-/AOh14Gj-L_2-VPPVXS6WKKXyG57FoLqpvBOxQwPr_nrG=s96-c" alt="Avatar of Jonathan Reinink" />
                     </div>
-                    <a href="#" @click="signOut">Sign out</a>
+                    <a class="flex justify-end font-medium" v-if="showProfileOptions" href="#" @click="signOut">Sign out</a>
                 </div>
             </div>
         
@@ -45,11 +45,12 @@ export default {
 
   data: function() {
     return {
-      products: [],
-      filteredProducts: [],
-      showProductFields: false,
-      url: '',
-      keyword:''
+        showProfileOptions: false,
+        products: [],
+        filteredProducts: [],
+        showProductFields: false,
+        url: '',
+        keyword:''
     }
   },
 
@@ -93,6 +94,10 @@ export default {
         this.$store.commit('unauthorizeUser')
         this.$router.push({ name: 'login'})
       });
+    },
+
+    toggleProfileOptions() {
+        this.showProfileOptions = !this.showProfileOptions
     }
 
   }
