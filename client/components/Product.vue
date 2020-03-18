@@ -7,7 +7,7 @@
                     <Review :review="review" />
                 </p>
                 <div class="flex">
-                    <textarea v-model="review" placeholder="review text here" class="w-full mr-5 border border-gray-400 resize-none outline-none"></textarea>
+                    <textarea v-model="review" placeholder="What do you think?" class="w-full mr-5 pt-5 pl-5 border border-gray-400 resize-none outline-none"></textarea>
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="submitReview">Add a Review</button>
                     <button class="font-bold py-2 px-4 rounded outline-none" @click="closeReviewBox">Cancel</button>
                 </div>
@@ -29,9 +29,10 @@
                         <p class="text-gray-600">Aug 18</p>
                     </div>
                     <div class="w-3/5"></div>
-                    <div class="w-1/5 flex flex-row justify-end">
-                        <span v-if="reviews.length > 0" class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3 w-auto">{{ reviews.length }}</span>
-                        <button class="bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" @click="addReview">View Reviews</button>
+                    <div class="w-1/5 flex justify-center items-center cursor-pointer border border-gray-500 rounded-full p-2" @click="addReview">
+                        <span v-if="reviews.length > 0" class="mr-2">{{reviews.length}} {{reviews.length > 1 ? 'reviews' : 'review'}}</span>
+                        <span v-else class="mr-2">Leave a review</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </div>
                 </div>
             </div>

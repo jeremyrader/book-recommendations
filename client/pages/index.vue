@@ -28,7 +28,7 @@
                 </div>
             </div>
         
-            <div class="mt-20">
+            <div class="mt-20 mb-10">
                 <h1 class="font-bold text-6xl">Zenn Recommendations</h1>
                 <h2 class="subtitle">Our favorites</h2>
             </div>
